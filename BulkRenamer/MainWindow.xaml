@@ -22,8 +22,8 @@
 
         <Grid x:Name="AppTitleBarHost" Height="32" Padding="8,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="Transparent">
             <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                <Image Source="Assets/Square44x44Logo.scale-400.png" Width="22" Height="22" Stretch="Uniform" />
-                <TextBlock x:Uid="AppTitle" VerticalAlignment="Center" FontSize="12" Margin="-1,-2,0,0" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+                <Image Source="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" Width="17" Height="17" Stretch="Uniform" />
+                <TextBlock x:Uid="AppTitle" VerticalAlignment="Center" FontSize="12" Margin="1,-2,0,0" Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
             </StackPanel>
         </Grid>
 

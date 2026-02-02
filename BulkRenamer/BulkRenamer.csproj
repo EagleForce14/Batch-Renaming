@@ -12,6 +12,8 @@
     <WinUISDKReferences>false</WinUISDKReferences>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <ApplicationLanguages>en-US;fr-FR</ApplicationLanguages>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Bulk Renamer Icon2.png" />
