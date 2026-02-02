@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle.Text" xml:space="preserve">
+    <value>Batch Renaming</value>
+  </data>
+  <data name="AppBarAdd.Label" xml:space="preserve">
+    <value>Ajouter des fichiers</value>
+  </data>
+  <data name="AppBarFolder.Label" xml:space="preserve">
+    <value>Ajouter un dossier</value>
+  </data>
+  <data name="AppBarRemove.Label" xml:space="preserve">
+    <value>Retirer sélection</value>
+  </data>
+  <data name="AppBarClear.Label" xml:space="preserve">
+    <value>Vider</value>
+  </data>
+  <data name="AppBarUndo.Label" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="ApplyButtonText.Text" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="ScopeLabel.Text" xml:space="preserve">
+    <value>Portée</value>
+  </data>
+  <data name="ScopeNameItem.Content" xml:space="preserve">
+    <value>Nom du fichier uniquement</value>
+  </data>
+  <data name="ScopeExtensionItem.Content" xml:space="preserve">
+    <value>Extension uniquement</value>
+  </data>
+  <data name="ScopeFullItem.Content" xml:space="preserve">
+    <value>Nom du fichier et extension</value>
+  </data>
+  <data name="PrefixLabel.Text" xml:space="preserve">
+    <value>Préfixe</value>
+  </data>
+  <data name="PrefixBox.PlaceholderText" xml:space="preserve">
+    <value>ex: final_</value>
+  </data>
+  <data name="SuffixLabel.Text" xml:space="preserve">
+    <value>Suffixe</value>
+  </data>
+  <data name="SuffixBox.PlaceholderText" xml:space="preserve">
+    <value>ex: _v2</value>
+  </data>
+  <data name="SearchLabel.Text" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
+  <data name="SearchBox.PlaceholderText" xml:space="preserve">
+    <value>ex: brouillon</value>
+  </data>
+  <data name="ReplaceLabel.Text" xml:space="preserve">
+    <value>Remplacer par</value>
+  </data>
+  <data name="ReplaceBox.PlaceholderText" xml:space="preserve">
+    <value>ex: final</value>
+  </data>
+  <data name="RegexToggle.Content" xml:space="preserve">
+    <value>Expression régulière</value>
+  </data>
+  <data name="RegexAllToggle.Content" xml:space="preserve">
+    <value>Remplacer toutes les occurrences</value>
+  </data>
+  <data name="InsertLabel.Text" xml:space="preserve">
+    <value>Insérer</value>
+  </data>
+  <data name="InsertAfterLabel.Text" xml:space="preserve">
+    <value>Après le caractère</value>
+  </data>
+  <data name="InsertTextBox.PlaceholderText" xml:space="preserve">
+    <value>ex: _v2</value>
+  </data>
+  <data name="InsertPositionBox.Header" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="CaseLabel.Text" xml:space="preserve">
+    <value>Casse</value>
+  </data>
+  <data name="CaseNoneItem.Content" xml:space="preserve">
+    <value>Aucune</value>
+  </data>
+  <data name="CaseLowerItem.Content" xml:space="preserve">
+    <value>Minuscules</value>
+  </data>
+  <data name="CaseUpperItem.Content" xml:space="preserve">
+    <value>Majuscules</value>
+  </data>
+  <data name="CaseTitleItem.Content" xml:space="preserve">
+    <value>Capitaliser</value>
+  </data>
+  <data name="RemoveAccentsToggle.Content" xml:space="preserve">
+    <value>Supprimer les accents</value>
+  </data>
+  <data name="NumberingExpander.Header" xml:space="preserve">
+    <value>Numérotation</value>
+  </data>
+  <data name="NumberingToggle.Content" xml:space="preserve">
+    <value>Activer</value>
+  </data>
+  <data name="NumberStartLabel.Text" xml:space="preserve">
+    <value>Départ</value>
+  </data>
+  <data name="NumberPaddingLabel.Text" xml:space="preserve">
+    <value>Zéros</value>
+  </data>
+  <data name="NumberSeparatorLabel.Text" xml:space="preserve">
+    <value>Séparateur</value>
+  </data>
+  <data name="NumberSeparatorBox.PlaceholderText" xml:space="preserve">
+    <value>ex: _</value>
+  </data>
+  <data name="DirectoryHeader.Text" xml:space="preserve">
+    <value>Dossier</value>
+  </data>
+  <data name="EmptyStateText.Text" xml:space="preserve">
+    <value>Glissez-déposez des fichiers ici ou utilisez Ajouter</value>
+  </data>
+  <data name="ClearDialogTitle" xml:space="preserve">
+    <value>Vider la liste ?</value>
+  </data>
+  <data name="ClearDialogContent" xml:space="preserve">
+    <value>Les modifications apportées aux titres des fichiers seront perdues.</value>
+  </data>
+  <data name="ClearDialogPrimary" xml:space="preserve">
+    <value>Vider</value>
+  </data>
+  <data name="ClearDialogClose" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="ApplyNoFilesMessage" xml:space="preserve">
+    <value>Importez des fichiers avant d'appliquer.</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Erreur : {0}</value>
+  </data>
+  <data name="ApplySuccessMessage" xml:space="preserve">
+    <value>{0} renommage(s) appliqué(s), {1} ignoré(s).</value>
+  </data>
+  <data name="ApplyNoneMessage" xml:space="preserve">
+    <value>Aucun renommage appliqué.</value>
+  </data>
+  <data name="AddFilesMessage" xml:space="preserve">
+    <value>Fichiers ajoutés ({0})</value>
+  </data>
+  <data name="ConfirmSubfoldersTitle" xml:space="preserve">
+    <value>Inclure les sous-dossiers ?</value>
+  </data>
+  <data name="ConfirmSubfoldersContent" xml:space="preserve">
+    <value>Le dossier '{0}' contient des sous-dossiers. Les ajouter ?</value>
+  </data>
+  <data name="ConfirmSubfoldersYes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="ConfirmSubfoldersNo" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="NomHeaderText" xml:space="preserve">
+    <value>Nom original ({0})</value>
+  </data>
+  <data name="ApercuHeaderText" xml:space="preserve">
+    <value>Renommé ({0})</value>
+  </data>
+  <data name="ConflictErrorMessage" xml:space="preserve">
+    <value>Conflit de noms : les fichiers {0} auraient tous le nom '{1}'.</value>
+  </data>
+  <data name="FilterAll.Content" xml:space="preserve">
+    <value>Tous les fichiers</value>
+  </data>
+  <data name="FilterEnabledOnly.Content" xml:space="preserve">
+    <value>Fichiers activés uniquement</value>
+  </data>
+  <data name="FilterDisabledOnly.Content" xml:space="preserve">
+    <value>Fichiers désactivés uniquement</value>
+  </data>
+  <data name="FilterWithChanges.Content" xml:space="preserve">
+    <value>Fichiers avec changements</value>
+  </data>
+  <data name="FilterWithoutChanges.Content" xml:space="preserve">
+    <value>Fichiers sans changements</value>
+  </data>
+  <data name="AppBarSaveConfig.Label" xml:space="preserve">
+    <value>Sauvegarder les règles</value>
+  </data>
+  <data name="AppBarLoadConfig.Label" xml:space="preserve">
+    <value>Charger des règles</value>
+  </data>
+  <data name="SaveConfigSuccessMessage" xml:space="preserve">
+    <value>Configuration sauvegardée avec succès</value>
+  </data>
+  <data name="LoadConfigSuccessMessage" xml:space="preserve">
+    <value>Configuration chargée avec succès</value>
+  </data>
+  <data name="LoadConfigErrorMessage" xml:space="preserve">
+    <value>Erreur lors du chargement de la configuration : {0}</value>
+  </data>
+  <data name="MenuRemoveSelected.Text" xml:space="preserve">
+    <value>Retirer la sélection</value>
+  </data>
+  <data name="RemoveCharsExpander.Header" xml:space="preserve">
+    <value>Suppression de caractères</value>
+  </data>
+  <data name="RemoveFirstToggle.Content" xml:space="preserve">
+    <value>Supprimer les premiers</value>
+  </data>
+  <data name="RemoveLastToggle.Content" xml:space="preserve">
+    <value>Supprimer les derniers</value>
+  </data>
+</root>

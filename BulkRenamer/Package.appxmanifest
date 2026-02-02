@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+	<Identity
+	  Name="36405Eagle-Apps.BatchRenameFileRenamer"
+	  Publisher="CN=652BE3EA-6578-4D00-986E-5F0450F92FC9"
+	  Version="1.0.0.0" />
+
+	<mp:PhoneIdentity PhoneProductId="5aa70ac2-4ce2-4237-83f7-e23a49bcfc4f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+	<Properties>
+		<DisplayName>Batch Renaming</DisplayName>
+		<PublisherDisplayName>Eagle-Apps</PublisherDisplayName>
+		<Logo>Assets\StoreLogo.png</Logo>
+	</Properties>
+
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+	</Dependencies>
+
+	<Resources>
+		<Resource Language="en-US"/>
+		<Resource Language="fr-FR"/>
+	</Resources>
+
+	<Applications>
+		<Application Id="App"
+		  Executable="$targetnametoken$.exe"
+		  EntryPoint="$targetentrypoint$">
+			<uap:VisualElements
+			  DisplayName="Batch Renaming"
+			  Description="Batch Renaming"
+			  BackgroundColor="transparent"
+			  Square150x150Logo="Assets\Square150x150Logo.png"
+			  Square44x44Logo="Assets\Square44x44Logo.png">
+				<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
+				<uap:SplashScreen Image="Assets\SplashScreen.png" />
+			</uap:VisualElements>
+			<Extensions>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="batchrenamer">
+						<uap:DisplayName>Batch Renamer</uap:DisplayName>
+						<uap:Logo>Assets\Square44x44Logo.png</uap:Logo>
+						<uap:SupportedFileTypes>
+							<uap:FileType>.txt</uap:FileType>
+							<uap:FileType>.png</uap:FileType>
+							<uap:FileType>.jpg</uap:FileType>
+							<uap:FileType>.jpeg</uap:FileType>
+							<uap:FileType>.json</uap:FileType>
+							<uap:FileType>.md</uap:FileType>
+							<uap:FileType>.csv</uap:FileType>
+							<uap:FileType>.xml</uap:FileType>
+							<uap:FileType>.yaml</uap:FileType>
+							<uap:FileType>.yml</uap:FileType>
+							<uap:FileType>.log</uap:FileType>
+							<uap:FileType>.ini</uap:FileType>
+							<uap:FileType>.cfg</uap:FileType>
+							<uap:FileType>.rtf</uap:FileType>
+							<uap:FileType>.pdf</uap:FileType>
+							<uap:FileType>.docx</uap:FileType>
+							<uap:FileType>.html</uap:FileType>
+							<uap:FileType>.htm</uap:FileType>
+							<uap:FileType>.css</uap:FileType>
+							<uap:FileType>.js</uap:FileType>
+							<uap:FileType>.ts</uap:FileType>
+							<uap:FileType>.tsx</uap:FileType>
+							<uap:FileType>.jsx</uap:FileType>
+							<uap:FileType>.scss</uap:FileType>
+							<uap:FileType>.less</uap:FileType>
+							<uap:FileType>.svg</uap:FileType>
+							<uap:FileType>.bmp</uap:FileType>
+							<uap:FileType>.gif</uap:FileType>
+							<uap:FileType>.tif</uap:FileType>
+							<uap:FileType>.tiff</uap:FileType>
+							<uap:FileType>.webp</uap:FileType>
+							<uap:FileType>.psd</uap:FileType>
+							<uap:FileType>.ai</uap:FileType>
+							<uap:FileType>.zip</uap:FileType>
+							<uap:FileType>.7z</uap:FileType>
+							<uap:FileType>.rar</uap:FileType>
+							<uap:FileType>.tar</uap:FileType>
+							<uap:FileType>.gz</uap:FileType>
+						</uap:SupportedFileTypes>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
+			</Extensions>
+
+		</Application>
+	</Applications>
+
+	<Capabilities>
+		<rescap:Capability Name="runFullTrust" />
+	</Capabilities>
+</Package>
