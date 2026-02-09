@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>Batch Renaming</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>Renommez vos fichiers en masse rapidement et en toute sécurité.</value>
+  </data>
+  <data name="PublisherDisplayName" xml:space="preserve">
+    <value>Eagle-Apps</value>
+  </data>
   <data name="AppTitle.Text" xml:space="preserve">
     <value>Batch Renaming</value>
   </data>
@@ -323,5 +332,46 @@
   </data>
   <data name="RemoveLastToggle.Content" xml:space="preserve">
     <value>Supprimer les derniers</value>
+  </data>
+  <data name="NavRenamingItem.Content" xml:space="preserve">
+    <value>Renommage</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="SettingsGeneralTitle.Text" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="SettingsLanguageTitle.Text" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="SettingsLanguageDescription.Text" xml:space="preserve">
+    <value>Choisissez votre langue d'affichage préférée</value>
+  </data>
+  <data name="SettingsRestartInfoBar.Message" xml:space="preserve">
+    <value>Un redémarrage est requis pour appliquer les changements de langue.</value>
+  </data>
+  <data name="SettingsRestartInfoBar.Title" xml:space="preserve">
+    <value>Redémarrage requis</value>
+  </data>
+  <data name="RestartDialogTitle" xml:space="preserve">
+    <value>Redémarrage requis</value>
+  </data>
+  <data name="RestartDialogContent" xml:space="preserve">
+    <value>L'application doit redémarrer pour changer la langue. Les modifications non enregistrées (comme la liste des fichiers ajoutés) peuvent être perdues.
+
+Voulez-vous redémarrer maintenant ?</value>
+  </data>
+  <data name="RestartDialogPrimary" xml:space="preserve">
+    <value>Redémarrer</value>
+  </data>
+  <data name="RestartDialogClose" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="LanguageItem_English.Content" xml:space="preserve">
+    <value>Anglais</value>
+  </data>
+  <data name="LanguageItem_French.Content" xml:space="preserve">
+    <value>Français</value>
   </data>
 </root>

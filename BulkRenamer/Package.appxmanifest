@@ -10,7 +10,7 @@
 	<Identity
 	  Name="36405Eagle-Apps.BatchRenameFileRenamer"
 	  Publisher="CN=652BE3EA-6578-4D00-986E-5F0450F92FC9"
-	  Version="1.0.1.0" />
+	  Version="1.0.2.0" />
 
 	<mp:PhoneIdentity PhoneProductId="5aa70ac2-4ce2-4237-83f7-e23a49bcfc4f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -25,8 +25,7 @@
 	</Dependencies>
 
 	<Resources>
-		<Resource Language="en-US"/>
-		<Resource Language="fr-FR"/>
+		<Resource Language="x-generate" />
 	</Resources>
 
 	<Applications>

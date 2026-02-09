@@ -14,6 +14,7 @@
     <Nullable>enable</Nullable>
     <DefaultLanguage>en-US</DefaultLanguage>
     <ApplicationLanguages>en-US;fr-FR</ApplicationLanguages>
+    <PackageSupportedLanguages>en-US;fr-FR</PackageSupportedLanguages>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Bulk Renamer Icon2.png" />
@@ -23,7 +24,6 @@
   <ItemGroup>
     <None Remove="Assets\Bulk Renamer Icon2.png" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -78,7 +78,7 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>

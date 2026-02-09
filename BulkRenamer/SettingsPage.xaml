@@ -1,0 +1,45 @@
+<Page
+    x:Class="BulkRenamer.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BulkRenamer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="20" Padding="32">
+            <!-- Title -->
+            <TextBlock x:Uid="SettingsTitle" Text="Settings" Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,12" />
+
+            <!-- Language Settings Card -->
+            <StackPanel Spacing="4">
+                <TextBlock x:Uid="SettingsGeneralTitle" Text="General" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,0,0,4"/>
+                
+                <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" Background="{ThemeResource LayerFillColorDefaultBrush}" Padding="16">
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <FontIcon Glyph="&#xE774;" FontSize="16" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" />
+                        
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                            <TextBlock x:Uid="SettingsLanguageTitle" Text="Language" Style="{StaticResource BodyTextBlockStyle}" FontWeight="SemiBold" />
+                            <TextBlock x:Uid="SettingsLanguageDescription" Text="Choose your preferred display language" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                        
+                        <ComboBox Grid.Column="2" x:Name="LanguageComboBox" MinWidth="150" SelectionChanged="OnLanguageChanged" VerticalAlignment="Center">
+                            <ComboBoxItem x:Uid="LanguageItem_English" Tag="en-US" Content="English" />
+                            <ComboBoxItem x:Uid="LanguageItem_French" Tag="fr-FR" Content="Français" />
+                        </ComboBox>
+                    </Grid>
+                </Border>
+                
+                <InfoBar x:Uid="SettingsRestartInfoBar" x:Name="RestartInfoBar" IsOpen="False" Severity="Warning" Message="A restart is required to apply language changes." />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
