@@ -9,6 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Text;
 using Windows.Globalization;
+using System.Collections.Generic;
+using Windows.ApplicationModel.Resources;
+
 
 namespace BulkRenamer
 {
@@ -352,6 +355,125 @@ namespace BulkRenamer
         public int RemoveFirstCount { get; set; }
         public bool RemoveLastChars { get; set; }
         public int RemoveLastCount { get; set; }
+    }
+
+    public sealed class NavigationToRenamingArgs
+    {
+        public RenameSettings Settings { get; init; } = new();
+        public bool FromHistory { get; init; }
+    }
+
+    public class HistoryEntry : INotifyPropertyChanged
+    {
+        private bool _isUndone;
+
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public int FileCount { get; set; }
+        public RenameSettings Settings { get; set; } = new();
+        public List<FileHistoryRecord> Records { get; set; } = new();
+
+        public bool IsUndone
+        {
+            get => _isUndone;
+            set
+            {
+                if (_isUndone != value)
+                {
+                    _isUndone = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(StatusText));
+                    OnPropertyChanged(nameof(CanUndo));
+                    OnPropertyChanged(nameof(CanRedo));
+                    OnPropertyChanged(nameof(StatusColor));
+                }
+            }
+        }
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public string Summary
+        {
+            get
+            {
+                try
+                {
+                    var loader = new ResourceLoader();
+                    var key = FileCount == 1 ? "History_FileCountSingular" : "History_FileCountPlural";
+                    var fileText = string.Format(loader.GetString(key), FileCount);
+                    return $"{Timestamp:g} • {fileText}";
+                }
+                catch
+                {
+                    return $"{Timestamp:g} • {FileCount} files";
+                }
+            }
+        }
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public string StatusText
+        {
+            get
+            {
+                try
+                {
+                    var loader = new ResourceLoader();
+                    return IsUndone ? loader.GetString("History_Status_Undone") : loader.GetString("History_Status_Applied");
+                }
+                catch
+                {
+                    return IsUndone ? "Undone" : "Applied";
+                }
+            }
+        }
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public bool CanUndo => !IsUndone;
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public bool CanRedo => IsUndone;
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public Microsoft.UI.Xaml.Media.Brush StatusColor => IsUndone 
+            ? new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.OrangeRed) 
+            : new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.MediumSeaGreen);
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public string SettingsSummary {
+            get {
+                try
+                {
+                    var loader = new ResourceLoader();
+                    var sb = new StringBuilder();
+                    if (!string.IsNullOrEmpty(Settings.Prefix)) sb.Append(string.Format(loader.GetString("History_Prefix"), Settings.Prefix));
+                    if (!string.IsNullOrEmpty(Settings.Suffix)) sb.Append(string.Format(loader.GetString("History_Suffix"), Settings.Suffix));
+                    if (!string.IsNullOrEmpty(Settings.Search)) sb.Append(string.Format(loader.GetString("History_Search"), Settings.Search));
+                    if (Settings.CaseOption != NameCaseOption.None) 
+                    {
+                        var caseVal = loader.GetString($"History_Case_{Settings.CaseOption}");
+                        sb.Append(string.Format(loader.GetString("History_Case"), caseVal));
+                    }
+                    if (Settings.UseNumbering) sb.Append(loader.GetString("History_Numbering"));
+                    if (sb.Length == 0) return loader.GetString("History_CustomRules");
+                    return sb.ToString();
+                }
+                catch
+                {
+                    return "Custom Rules";
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+    public class FileHistoryRecord
+    {
+        public string OriginalPath { get; set; } = string.Empty;
+        public string NewPath { get; set; } = string.Empty;
     }
 
     public sealed class BoolToOpacityConverter : IValueConverter

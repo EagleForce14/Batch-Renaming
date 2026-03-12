@@ -374,4 +374,130 @@ Do you want to restart now?</value>
   <data name="LanguageItem_French.Content" xml:space="preserve">
     <value>French</value>
   </data>
+  <data name="NavHistoryItem.Content" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="TemplatesTitle.Text" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="NoTemplatesTitle.Text" xml:space="preserve">
+    <value>No templates saved yet.</value>
+  </data>
+  <data name="NoTemplatesDescription.Text" xml:space="preserve">
+    <value>Save your renaming configuration as a template to reuse it later.</value>
+  </data>
+  <data name="ApplyTemplateButton.Text" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="AppBarSaveTemplate.Label" xml:space="preserve">
+    <value>Save as Template</value>
+  </data>
+  <data name="TemplateNameDialogTitle" xml:space="preserve">
+    <value>Save as Template</value>
+  </data>
+  <data name="TemplateNamePlaceholder" xml:space="preserve">
+    <value>Template Name</value>
+  </data>
+  <data name="SaveTemplateSuccess" xml:space="preserve">
+    <value>Template saved successfully</value>
+  </data>
+  <data name="DeleteTemplateButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete template</value>
+  </data>
+  <data name="HistoryPageTitle.Text" xml:space="preserve">
+    <value>History &amp; Undo</value>
+  </data>
+  <data name="UndoButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Undo changes</value>
+  </data>
+  <data name="UndoSuccessMessage" xml:space="preserve">
+    <value>Successfully undid {0} file renames.</value>
+  </data>
+  <data name="UndoErrorMessage" xml:space="preserve">
+    <value>Some files could not be restored.</value>
+  </data>
+  <data name="StatusApplied" xml:space="preserve">
+    <value>Applied</value>
+  </data>
+  <data name="StatusUndone" xml:space="preserve">
+    <value>Undone</value>
+  </data>
+  <data name="ReuseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reuse settings</value>
+  </data>
+  <data name="UndoButtonText.Text" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="RedoButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Redo changes</value>
+  </data>
+  <data name="RedoSuccessMessage" xml:space="preserve">
+    <value>Successfully redid {0} file renames.</value>
+  </data>
+  <data name="RedoErrorMessage" xml:space="preserve">
+    <value>Some files could not be restored.</value>
+  </data>
+  <data name="RedoButtonText.Text" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="ClearHistoryButton.Content" xml:space="preserve">
+    <value>Clear History</value>
+  </data>
+  <data name="History_Prefix" xml:space="preserve">
+    <value>Prefix: '{0}' </value>
+  </data>
+  <data name="History_Suffix" xml:space="preserve">
+    <value>Suffix: '{0}' </value>
+  </data>
+  <data name="History_Search" xml:space="preserve">
+    <value>Search: '{0}' </value>
+  </data>
+  <data name="History_Case" xml:space="preserve">
+    <value>Case: {0} </value>
+  </data>
+  <data name="History_Numbering" xml:space="preserve">
+    <value>Numbering </value>
+  </data>
+  <data name="History_CustomRules" xml:space="preserve">
+    <value>Custom Rules</value>
+  </data>
+  <data name="History_FileCountSingular" xml:space="preserve">
+    <value>{0} file</value>
+  </data>
+  <data name="History_FileCountPlural" xml:space="preserve">
+    <value>{0} files</value>
+  </data>
+  <data name="History_Case_Lower" xml:space="preserve">
+    <value>lower</value>
+  </data>
+  <data name="History_Case_Upper" xml:space="preserve">
+    <value>upper</value>
+  </data>
+  <data name="History_Case_Title" xml:space="preserve">
+    <value>title</value>
+  </data>
+  <data name="History_Status_Undone" xml:space="preserve">
+    <value>Undone</value>
+  </data>
+  <data name="History_Status_Applied" xml:space="preserve">
+    <value>Applied</value>
+  </data>
+  <data name="HistoryFilesExpander.Header" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="BackFromHistoryButton.Label" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="ConfirmLeaveTitle" xml:space="preserve">
+    <value>Unsaved changes</value>
+  </data>
+  <data name="ConfirmLeaveContent" xml:space="preserve">
+    <value>You have pending rename changes. Leave without applying?</value>
+  </data>
+  <data name="ConfirmLeaveLeave" xml:space="preserve">
+    <value>Leave</value>
+  </data>
+  <data name="ConfirmLeaveStay" xml:space="preserve">
+    <value>Stay</value>
+  </data>
 </root>

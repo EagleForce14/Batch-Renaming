@@ -30,6 +30,7 @@ namespace BulkRenamer
         private bool _canApply;
         private bool _suppressUpdates;
         private bool _isUpdatingFilter;
+        private bool _hasPendingRuleChanges;
         private readonly SemaphoreSlim _dialogGate = new(1, 1);
         private readonly ResourceLoader? _resources;
         private Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
@@ -59,11 +60,21 @@ namespace BulkRenamer
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is IEnumerable<string> files)
+            if (e.Parameter is NavigationToRenamingArgs historyArgs)
+            {
+                ApplySettings(historyArgs.Settings);
+            }
+            else if (e.Parameter is IEnumerable<string> files)
             {
                 ImportFiles(files);
             }
+            else if (e.Parameter is RenameSettings settings)
+            {
+                ApplySettings(settings);
+            }
         }
+
+// Removed OnSaveTemplate
 
         private async void OnAddFiles(object sender, RoutedEventArgs e)
         {
@@ -259,6 +270,7 @@ namespace BulkRenamer
         private void OnRuleChanged(object sender, RoutedEventArgs e)
         {
             if (!_isInitialized || _suppressUpdates) return;
+            _hasPendingRuleChanges = true;
             UpdatePreview();
             UpdateCounts();
             UpdateApplyState();
@@ -267,6 +279,7 @@ namespace BulkRenamer
         private void OnNumberRuleChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             if (!_isInitialized || _suppressUpdates) return;
+            _hasPendingRuleChanges = true;
             UpdatePreview();
             UpdateCounts();
             UpdateApplyState();
@@ -275,6 +288,7 @@ namespace BulkRenamer
         private void OnCaseChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!_isInitialized || _suppressUpdates) return;
+            _hasPendingRuleChanges = true;
             UpdatePreview();
             UpdateCounts();
             UpdateApplyState();
@@ -283,6 +297,7 @@ namespace BulkRenamer
         private void OnInsertRuleChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             if (!_isInitialized || _suppressUpdates) return;
+            _hasPendingRuleChanges = true;
             UpdatePreview();
             UpdateCounts();
             UpdateApplyState();
@@ -291,6 +306,7 @@ namespace BulkRenamer
         private void OnRegexOptionChanged(object sender, RoutedEventArgs e)
         {
             if (!_isInitialized || _suppressUpdates) return;
+            _hasPendingRuleChanges = true;
             UpdatePreview();
         }
 
@@ -337,6 +353,28 @@ namespace BulkRenamer
 
             _suppressUpdates = false;
             UpdatePreview();
+        }
+
+        private bool HasPendingChanges => Files.Any(f => f.IsEnabled && !string.IsNullOrEmpty(f.PreviewName));
+
+        public async Task<bool> ConfirmLeaveIfPendingAsync()
+        {
+            if (!HasPendingChanges)
+            {
+                return true;
+            }
+
+            var dialog = new ContentDialog
+            {
+                Title = GetString("ConfirmLeaveTitle"),
+                Content = GetString("ConfirmLeaveContent"),
+                PrimaryButtonText = GetString("ConfirmLeaveLeave"),
+                CloseButtonText = GetString("ConfirmLeaveStay"),
+                DefaultButton = ContentDialogButton.Close
+            };
+
+            var result = await ShowDialogAsync(dialog);
+            return result == ContentDialogResult.Primary;
         }
 
         private async void OnSaveConfig(object sender, RoutedEventArgs e)
@@ -448,6 +486,7 @@ namespace BulkRenamer
             RemoveLastBox.Value = settings.RemoveLastCount;
 
             _suppressUpdates = false;
+            _hasPendingRuleChanges = false;
             UpdatePreview();
         }
 
@@ -484,6 +523,7 @@ namespace BulkRenamer
 
             int success = 0;
             int skipped = 0;
+            var successRecords = new List<FileHistoryRecord>();
 
             foreach (var file in Files)
             {
@@ -510,9 +550,15 @@ namespace BulkRenamer
 
                 try
                 {
+                    var oldPath = file.FullPath;
                     File.Move(file.FullPath, targetPath);
                     file.RefreshAfterApply(targetPath);
                     success++;
+                    successRecords.Add(new FileHistoryRecord
+                    {
+                        OriginalPath = oldPath,
+                        NewPath = targetPath
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -524,7 +570,17 @@ namespace BulkRenamer
 
             if (success > 0)
             {
+                var historyEntry = new HistoryEntry
+                {
+                    Timestamp = DateTime.Now,
+                    FileCount = success,
+                    Settings = ReadSettings(),
+                    Records = successRecords
+                };
+                await HistoryManager.AddEntryAsync(historyEntry);
+
                 ShowInfo(FormatString("ApplySuccessMessage", success, skipped), InfoBarSeverity.Success);
+                _hasPendingRuleChanges = false;
             }
             else
             {

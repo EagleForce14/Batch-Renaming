@@ -3,12 +3,15 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using WinRT.Interop;
 
 namespace BulkRenamer
 {
     public sealed partial class MainWindow : Window
     {
+        private bool _backToHistoryActive;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -24,6 +27,7 @@ namespace BulkRenamer
             // Navigate to home logic is handled by setting IsSelected=True in XAML which triggers SelectionChanged
             // But usually we need to do it manually on first load to ensure Frame content is set.
             ContentFrame.Navigate(typeof(RenamingPage));
+            ContentFrame.Navigated += ContentFrame_Navigated;
         }
 
         public void ImportFiles(System.Collections.Generic.IEnumerable<string> files)
@@ -48,9 +52,66 @@ namespace BulkRenamer
             {
                  if (args.SelectedItemContainer.Tag?.ToString() == "Home")
                  {
+                     _backToHistoryActive = false;
+                     UpdateBackButtonVisibility();
                      ContentFrame.Navigate(typeof(RenamingPage), null, args.RecommendedNavigationTransitionInfo);
                  }
+                 else if (args.SelectedItemContainer.Tag?.ToString() == "History")
+                 {
+                     _backToHistoryActive = false;
+                     UpdateBackButtonVisibility();
+                     ContentFrame.Navigate(typeof(HistoryPage), null, args.RecommendedNavigationTransitionInfo);
+                 }
             }
+        }
+
+        private async void OnNavBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (!_backToHistoryActive)
+            {
+                return;
+            }
+
+            if (ContentFrame.Content is RenamingPage page)
+            {
+                var allow = await page.ConfirmLeaveIfPendingAsync();
+                if (!allow)
+                {
+                    return;
+                }
+            }
+
+            if (ContentFrame.CanGoBack)
+            {
+                ContentFrame.GoBack();
+            }
+            else
+            {
+                ContentFrame.Navigate(typeof(HistoryPage));
+            }
+
+            _backToHistoryActive = false;
+            UpdateBackButtonVisibility();
+        }
+
+        private void ContentFrame_Navigated(object sender, Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            if (e.SourcePageType == typeof(RenamingPage) && e.Parameter is NavigationToRenamingArgs navArgs && navArgs.FromHistory)
+            {
+                _backToHistoryActive = true;
+            }
+            else
+            {
+                _backToHistoryActive = false;
+            }
+
+            UpdateBackButtonVisibility();
+        }
+
+        private void UpdateBackButtonVisibility()
+        {
+            NavView.IsBackEnabled = _backToHistoryActive;
+            NavView.IsBackButtonVisible = _backToHistoryActive ? NavigationViewBackButtonVisible.Visible : NavigationViewBackButtonVisible.Collapsed;
         }
     }
 }

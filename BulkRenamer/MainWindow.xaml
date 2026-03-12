@@ -27,9 +27,10 @@
             </StackPanel>
         </Grid>
 
-        <NavigationView Grid.Row="1" x:Name="NavView" PaneDisplayMode="LeftCompact" IsSettingsVisible="True" SelectionChanged="OnNavSelectionChanged" IsPaneOpen="False" IsBackButtonVisible="Collapsed">
+        <NavigationView Grid.Row="1" x:Name="NavView" PaneDisplayMode="LeftCompact" IsSettingsVisible="True" SelectionChanged="OnNavSelectionChanged" IsPaneOpen="False" IsBackButtonVisible="Collapsed" BackRequested="OnNavBackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Uid="NavRenamingItem" Icon="Home" Content="Renaming" Tag="Home" IsSelected="True" />
+                <NavigationViewItem x:Uid="NavHistoryItem" Icon="Clock" Content="History" Tag="History" />
             </NavigationView.MenuItems>
             <NavigationView.Content>
                 <Frame x:Name="ContentFrame">

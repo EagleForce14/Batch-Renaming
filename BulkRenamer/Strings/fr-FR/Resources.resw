@@ -374,4 +374,130 @@ Voulez-vous redémarrer maintenant ?</value>
   <data name="LanguageItem_French.Content" xml:space="preserve">
     <value>Français</value>
   </data>
+  <data name="NavHistoryItem.Content" xml:space="preserve">
+    <value>Historique</value>
+  </data>
+  <data name="TemplatesTitle.Text" xml:space="preserve">
+    <value>Modèles</value>
+  </data>
+  <data name="NoTemplatesTitle.Text" xml:space="preserve">
+    <value>Aucun modèle enregistré.</value>
+  </data>
+  <data name="NoTemplatesDescription.Text" xml:space="preserve">
+    <value>Enregistrez votre configuration comme modèle pour la réutiliser plus tard.</value>
+  </data>
+  <data name="ApplyTemplateButton.Text" xml:space="preserve">
+    <value>Charger</value>
+  </data>
+  <data name="AppBarSaveTemplate.Label" xml:space="preserve">
+    <value>Enregistrer comme modèle</value>
+  </data>
+  <data name="TemplateNameDialogTitle" xml:space="preserve">
+    <value>Enregistrer comme modèle</value>
+  </data>
+  <data name="TemplateNamePlaceholder" xml:space="preserve">
+    <value>Nom du modèle</value>
+  </data>
+  <data name="SaveTemplateSuccess" xml:space="preserve">
+    <value>Modèle enregistré avec succès</value>
+  </data>
+  <data name="DeleteTemplateButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Supprimer le modèle</value>
+  </data>
+  <data name="HistoryPageTitle.Text" xml:space="preserve">
+    <value>Historique &amp; Annulation</value>
+  </data>
+  <data name="UndoButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Annuler les modifications</value>
+  </data>
+  <data name="UndoSuccessMessage" xml:space="preserve">
+    <value>Annulation réussie pour {0} fichiers.</value>
+  </data>
+  <data name="UndoErrorMessage" xml:space="preserve">
+    <value>Certains fichiers n'ont pas pu être restaurés.</value>
+  </data>
+  <data name="StatusApplied" xml:space="preserve">
+    <value>Appliqué</value>
+  </data>
+  <data name="StatusUndone" xml:space="preserve">
+    <value>Annulé</value>
+  </data>
+  <data name="ReuseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Réutiliser les paramètres</value>
+  </data>
+  <data name="UndoButtonText.Text" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="RedoButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Rétablir les modifications</value>
+  </data>
+  <data name="RedoSuccessMessage" xml:space="preserve">
+    <value>Rétablissement réussi pour {0} fichiers.</value>
+  </data>
+  <data name="RedoErrorMessage" xml:space="preserve">
+    <value>Certains fichiers n'ont pas pu être rétablis.</value>
+  </data>
+  <data name="RedoButtonText.Text" xml:space="preserve">
+    <value>Rétablir</value>
+  </data>
+  <data name="ClearHistoryButton.Content" xml:space="preserve">
+    <value>Effacer l'historique</value>
+  </data>
+  <data name="History_Prefix" xml:space="preserve">
+    <value>Préfixe : '{0}' </value>
+  </data>
+  <data name="History_Suffix" xml:space="preserve">
+    <value>Suffixe : '{0}' </value>
+  </data>
+  <data name="History_Search" xml:space="preserve">
+    <value>Recherche : '{0}' </value>
+  </data>
+  <data name="History_Case" xml:space="preserve">
+    <value>Casse : {0} </value>
+  </data>
+  <data name="History_Numbering" xml:space="preserve">
+    <value>Numérotation </value>
+  </data>
+  <data name="History_CustomRules" xml:space="preserve">
+    <value>Règles personnalisées</value>
+  </data>
+  <data name="History_FileCountSingular" xml:space="preserve">
+    <value>{0} fichier</value>
+  </data>
+  <data name="History_FileCountPlural" xml:space="preserve">
+    <value>{0} fichiers</value>
+  </data>
+  <data name="History_Case_Lower" xml:space="preserve">
+    <value>minuscule</value>
+  </data>
+  <data name="History_Case_Upper" xml:space="preserve">
+    <value>majuscule</value>
+  </data>
+  <data name="History_Case_Title" xml:space="preserve">
+    <value>titre</value>
+  </data>
+  <data name="History_Status_Undone" xml:space="preserve">
+    <value>Annulé</value>
+  </data>
+  <data name="History_Status_Applied" xml:space="preserve">
+    <value>Appliqué</value>
+  </data>
+  <data name="HistoryFilesExpander.Header" xml:space="preserve">
+    <value>Fichiers</value>
+  </data>
+  <data name="BackFromHistoryButton.Label" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="ConfirmLeaveTitle" xml:space="preserve">
+    <value>Modifications non enregistrées</value>
+  </data>
+  <data name="ConfirmLeaveContent" xml:space="preserve">
+    <value>Des renommages sont en attente. Quitter sans appliquer ?</value>
+  </data>
+  <data name="ConfirmLeaveLeave" xml:space="preserve">
+    <value>Quitter</value>
+  </data>
+  <data name="ConfirmLeaveStay" xml:space="preserve">
+    <value>Rester</value>
+  </data>
 </root>

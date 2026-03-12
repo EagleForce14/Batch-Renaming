@@ -24,6 +24,7 @@
   <ItemGroup>
     <None Remove="Assets\Bulk Renamer Icon2.png" />
   </ItemGroup>
+  <!-- Removed AttributesPage -->
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -53,6 +54,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.7.251221100" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260101001" />
   </ItemGroup>
+  <!-- Removed AttributesPage None -->
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
