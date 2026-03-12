@@ -413,6 +413,12 @@ Voulez-vous redémarrer maintenant ?</value>
   <data name="UndoSuccessMessage" xml:space="preserve">
     <value>Annulation réussie pour {0} fichiers.</value>
   </data>
+  <data name="UndoSuccessMessageSingular" xml:space="preserve">
+    <value>Annulation réussie pour {0} fichier.</value>
+  </data>
+  <data name="UndoSuccessMessagePlural" xml:space="preserve">
+    <value>Annulation réussie pour {0} fichiers.</value>
+  </data>
   <data name="UndoErrorMessage" xml:space="preserve">
     <value>Certains fichiers n'ont pas pu être restaurés.</value>
   </data>
@@ -432,6 +438,12 @@ Voulez-vous redémarrer maintenant ?</value>
     <value>Rétablir les modifications</value>
   </data>
   <data name="RedoSuccessMessage" xml:space="preserve">
+    <value>Rétablissement réussi pour {0} fichiers.</value>
+  </data>
+  <data name="RedoSuccessMessageSingular" xml:space="preserve">
+    <value>Rétablissement réussi pour {0} fichier.</value>
+  </data>
+  <data name="RedoSuccessMessagePlural" xml:space="preserve">
     <value>Rétablissement réussi pour {0} fichiers.</value>
   </data>
   <data name="RedoErrorMessage" xml:space="preserve">

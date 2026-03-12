@@ -36,6 +36,18 @@ namespace BulkRenamer
             }
         }
 
+        private string FormatPluralized(string singularKey, string pluralKey, int count, string fallbackKey)
+        {
+            var key = count == 1 ? singularKey : pluralKey;
+            var localized = GetString(key);
+            if (string.Equals(localized, key, StringComparison.Ordinal))
+            {
+                return FormatString(fallbackKey, count);
+            }
+
+            return FormatString(key, count);
+        }
+
         private async void HistoryPage_Loaded(object sender, RoutedEventArgs e)
         {
             if (History.Count == 0)
@@ -117,7 +129,7 @@ namespace BulkRenamer
                 {
                     entry.IsUndone = true;
                     await HistoryManager.SaveAsync();
-                    ShowInfo(FormatString("UndoSuccessMessage", count), InfoBarSeverity.Success);
+                    ShowInfo(FormatPluralized("UndoSuccessMessageSingular", "UndoSuccessMessagePlural", count, "UndoSuccessMessage"), InfoBarSeverity.Success);
                 }
                 else
                 {
@@ -164,7 +176,7 @@ namespace BulkRenamer
                 {
                     entry.IsUndone = false;
                     await HistoryManager.SaveAsync();
-                    ShowInfo(FormatString("RedoSuccessMessage", count), InfoBarSeverity.Success);
+                    ShowInfo(FormatPluralized("RedoSuccessMessageSingular", "RedoSuccessMessagePlural", count, "RedoSuccessMessage"), InfoBarSeverity.Success);
                 }
                 else
                 {

@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using WinRT.Interop;
 
@@ -11,6 +12,7 @@ namespace BulkRenamer
     public sealed partial class MainWindow : Window
     {
         private bool _backToHistoryActive;
+        private bool _syncingNavSelection;
 
         public MainWindow()
         {
@@ -44,6 +46,11 @@ namespace BulkRenamer
 
         private void OnNavSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
+            if (_syncingNavSelection)
+            {
+                return;
+            }
+
             if (args.IsSettingsSelected)
             {
                 ContentFrame.Navigate(typeof(SettingsPage), null, args.RecommendedNavigationTransitionInfo);
@@ -106,6 +113,35 @@ namespace BulkRenamer
             }
 
             UpdateBackButtonVisibility();
+            SyncNavSelectionWithPage(e.SourcePageType);
+        }
+
+        private void SyncNavSelectionWithPage(Type sourcePageType)
+        {
+            try
+            {
+                _syncingNavSelection = true;
+
+                if (sourcePageType == typeof(SettingsPage))
+                {
+                    NavView.SelectedItem = NavView.SettingsItem;
+                    return;
+                }
+
+                var targetTag = sourcePageType == typeof(HistoryPage) ? "History" : "Home";
+                var targetItem = NavView.MenuItems
+                    .OfType<NavigationViewItem>()
+                    .FirstOrDefault(i => string.Equals(i.Tag?.ToString(), targetTag, StringComparison.Ordinal));
+
+                if (targetItem != null)
+                {
+                    NavView.SelectedItem = targetItem;
+                }
+            }
+            finally
+            {
+                _syncingNavSelection = false;
+            }
         }
 
         private void UpdateBackButtonVisibility()

@@ -413,6 +413,12 @@ Do you want to restart now?</value>
   <data name="UndoSuccessMessage" xml:space="preserve">
     <value>Successfully undid {0} file renames.</value>
   </data>
+  <data name="UndoSuccessMessageSingular" xml:space="preserve">
+    <value>Successfully undid {0} file rename.</value>
+  </data>
+  <data name="UndoSuccessMessagePlural" xml:space="preserve">
+    <value>Successfully undid {0} file renames.</value>
+  </data>
   <data name="UndoErrorMessage" xml:space="preserve">
     <value>Some files could not be restored.</value>
   </data>
@@ -432,6 +438,12 @@ Do you want to restart now?</value>
     <value>Redo changes</value>
   </data>
   <data name="RedoSuccessMessage" xml:space="preserve">
+    <value>Successfully redid {0} file renames.</value>
+  </data>
+  <data name="RedoSuccessMessageSingular" xml:space="preserve">
+    <value>Successfully redid {0} file rename.</value>
+  </data>
+  <data name="RedoSuccessMessagePlural" xml:space="preserve">
     <value>Successfully redid {0} file renames.</value>
   </data>
   <data name="RedoErrorMessage" xml:space="preserve">
