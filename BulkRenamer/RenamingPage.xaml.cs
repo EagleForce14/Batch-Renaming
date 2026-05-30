@@ -26,10 +26,14 @@ namespace BulkRenamer
         public ObservableCollection<FileEntry> Files { get; } = new();
         public ObservableCollection<FileEntry> FilteredFiles { get; } = new();
         private FileFilter _currentFilter = FileFilter.All;
+        private SortOption _currentSort = SortOption.Original;
+        private bool _sortAscending = true;
+        private int _nextImportIndex;
         private bool _isInitialized;
         private bool _canApply;
         private bool _suppressUpdates;
         private bool _isUpdatingFilter;
+        private bool _isReordering;
         private bool _hasPendingRuleChanges;
         private readonly SemaphoreSlim _dialogGate = new(1, 1);
         private readonly ResourceLoader? _resources;
@@ -51,6 +55,7 @@ namespace BulkRenamer
             _isInitialized = true;
             
             Files.CollectionChanged += OnFilesCollectionChanged;
+            UpdateSortDirectionVisual();
             UpdateEmptyState();
             UpdateCounts();
             UpdateApplyState();
@@ -626,13 +631,14 @@ namespace BulkRenamer
                 if (!File.Exists(path)) continue;
                 if (Files.Any(f => f.FullPath.Equals(path, StringComparison.OrdinalIgnoreCase))) continue;
 
-                var entry = new FileEntry(path, rootFolder, includeSubfolders);
+                var entry = new FileEntry(path, rootFolder, includeSubfolders, _nextImportIndex++);
                 Files.Add(entry);
                 added++;
             }
 
             if (added > 0)
             {
+                ApplyCurrentSort(updatePreview: false);
                 UpdatePreview();
                 UpdateEmptyState();
                 ShowInfo(FormatString("AddFilesMessage", Files.Count), InfoBarSeverity.Success);
@@ -787,7 +793,10 @@ namespace BulkRenamer
             UpdateCounts();
             UpdateApplyState();
             UpdateDirectoryColumnState();
-            UpdateFilteredFiles();
+            if (!_isReordering)
+            {
+                UpdateFilteredFiles();
+            }
         }
 
         private void OnFileEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -835,6 +844,7 @@ namespace BulkRenamer
         public bool ShowDirectoryColumn => Files.Any(f => !string.IsNullOrEmpty(f.RootFolder));
         public GridLength DirectoryColumnWidth => ShowDirectoryColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
         public Visibility DirectoryColumnVisibility => ShowDirectoryColumn ? Visibility.Visible : Visibility.Collapsed;
+        public string SortDirectionToolTip => GetString(_sortAscending ? "SortAscendingToolTip" : "SortDescendingToolTip");
         public bool CanApply
         {
             get => _canApply;
@@ -844,6 +854,94 @@ namespace BulkRenamer
                 _canApply = value;
                 OnPropertyChanged();
             }
+        }
+
+        private void ApplyCurrentSort(bool updatePreview = true)
+        {
+            if (Files.Count < 2)
+            {
+                if (updatePreview)
+                {
+                    UpdatePreview();
+                }
+
+                return;
+            }
+
+            var ordered = GetSortedFiles();
+            if (ordered.SequenceEqual(Files))
+            {
+                if (updatePreview)
+                {
+                    UpdatePreview();
+                }
+
+                return;
+            }
+
+            _isReordering = true;
+            try
+            {
+                for (var targetIndex = 0; targetIndex < ordered.Count; targetIndex++)
+                {
+                    var currentIndex = Files.IndexOf(ordered[targetIndex]);
+                    if (currentIndex != targetIndex)
+                    {
+                        Files.Move(currentIndex, targetIndex);
+                    }
+                }
+            }
+            finally
+            {
+                _isReordering = false;
+            }
+
+            UpdateDirectoryColumnState();
+            UpdateFilteredFiles();
+
+            if (updatePreview)
+            {
+                UpdatePreview();
+            }
+        }
+
+        private List<FileEntry> GetSortedFiles()
+        {
+            return _currentSort switch
+            {
+                SortOption.Name => OrderByDirection(f => f.OriginalName, StringComparer.CurrentCultureIgnoreCase),
+                SortOption.Extension => OrderByDirection(f => f.Extension, StringComparer.CurrentCultureIgnoreCase),
+                SortOption.Directory => OrderByDirection(f => f.DisplayDirectory, StringComparer.CurrentCultureIgnoreCase),
+                SortOption.Size => _sortAscending
+                    ? Files.OrderBy(f => f.FileSize).ThenBy(f => f.ImportIndex).ToList()
+                    : Files.OrderByDescending(f => f.FileSize).ThenBy(f => f.ImportIndex).ToList(),
+                SortOption.Modified => _sortAscending
+                    ? Files.OrderBy(f => f.ModifiedAt).ThenBy(f => f.ImportIndex).ToList()
+                    : Files.OrderByDescending(f => f.ModifiedAt).ThenBy(f => f.ImportIndex).ToList(),
+                SortOption.Created => _sortAscending
+                    ? Files.OrderBy(f => f.CreatedAt).ThenBy(f => f.ImportIndex).ToList()
+                    : Files.OrderByDescending(f => f.CreatedAt).ThenBy(f => f.ImportIndex).ToList(),
+                _ => _sortAscending
+                    ? Files.OrderBy(f => f.ImportIndex).ToList()
+                    : Files.OrderByDescending(f => f.ImportIndex).ToList()
+            };
+        }
+
+        private List<FileEntry> OrderByDirection(Func<FileEntry, string> keySelector, StringComparer comparer)
+        {
+            return _sortAscending
+                ? Files.OrderBy(keySelector, comparer).ThenBy(f => f.ImportIndex).ToList()
+                : Files.OrderByDescending(keySelector, comparer).ThenBy(f => f.ImportIndex).ToList();
+        }
+
+        private void UpdateSortDirectionVisual()
+        {
+            if (SortDirectionIcon != null)
+            {
+                SortDirectionIcon.Glyph = _sortAscending ? "\uE74A" : "\uE74B";
+            }
+
+            OnPropertyChanged(nameof(SortDirectionToolTip));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -930,6 +1028,29 @@ namespace BulkRenamer
 
             _currentFilter = Enum.Parse<FileFilter>((string)item.Tag);
             UpdateFilteredFiles();
+        }
+
+        private void OnSortChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_isInitialized || sender is not ComboBox combo || combo.SelectedItem is not ComboBoxItem item)
+            {
+                return;
+            }
+
+            _currentSort = Enum.Parse<SortOption>((string)item.Tag);
+            ApplyCurrentSort();
+        }
+
+        private void OnSortDirectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (!_isInitialized)
+            {
+                return;
+            }
+
+            _sortAscending = !_sortAscending;
+            UpdateSortDirectionVisual();
+            ApplyCurrentSort();
         }
     }
 }

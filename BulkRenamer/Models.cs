@@ -42,13 +42,28 @@ namespace BulkRenamer
             }
         }
 
-        public FileEntry(string fullPath, string? rootFolder = null, bool includeSubfolders = false)
+        public FileEntry(string fullPath, string? rootFolder = null, bool includeSubfolders = false, int importIndex = 0)
         {
             FullPath = fullPath;
             OriginalName = Path.GetFileName(fullPath);
             Directory = Path.GetDirectoryName(fullPath) ?? string.Empty;
             Extension = Path.GetExtension(fullPath);
             RootFolder = rootFolder ?? string.Empty;
+            ImportIndex = importIndex;
+
+            try
+            {
+                var info = new FileInfo(fullPath);
+                FileSize = info.Length;
+                CreatedAt = info.CreationTime;
+                ModifiedAt = info.LastWriteTime;
+            }
+            catch
+            {
+                FileSize = 0;
+                CreatedAt = DateTime.MinValue;
+                ModifiedAt = DateTime.MinValue;
+            }
 
             if (!string.IsNullOrEmpty(RootFolder))
             {
@@ -72,6 +87,10 @@ namespace BulkRenamer
         public bool IsRootFolderItem { get; }
         public bool IsFromSubfolder { get; }
         public string DisplayDirectory { get; }
+        public int ImportIndex { get; }
+        public long FileSize { get; }
+        public DateTime CreatedAt { get; }
+        public DateTime ModifiedAt { get; }
 
         public bool IsEnabled
         {
@@ -524,6 +543,17 @@ namespace BulkRenamer
         DisabledOnly,
         WithChanges,
         WithoutChanges
+    }
+
+    public enum SortOption
+    {
+        Original,
+        Name,
+        Extension,
+        Directory,
+        Size,
+        Modified,
+        Created
     }
 
     [System.Text.Json.Serialization.JsonSourceGenerationOptions(

@@ -512,4 +512,31 @@ Voulez-vous redémarrer maintenant ?</value>
   <data name="ConfirmLeaveStay" xml:space="preserve">
     <value>Rester</value>
   </data>
+  <data name="SortOriginal.Content" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="SortName.Content" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="SortExtension.Content" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="SortDirectory.Content" xml:space="preserve">
+    <value>Dossier</value>
+  </data>
+  <data name="SortSize.Content" xml:space="preserve">
+    <value>Taille</value>
+  </data>
+  <data name="SortModified.Content" xml:space="preserve">
+    <value>Modifié</value>
+  </data>
+  <data name="SortCreated.Content" xml:space="preserve">
+    <value>Créé</value>
+  </data>
+  <data name="SortAscendingToolTip" xml:space="preserve">
+    <value>Ordre croissant</value>
+  </data>
+  <data name="SortDescendingToolTip" xml:space="preserve">
+    <value>Ordre décroissant</value>
+  </data>
 </root>

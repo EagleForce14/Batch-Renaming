@@ -161,7 +161,7 @@
                     </Grid.RowDefinitions>
                     <InfoBar x:Name="StatusBar" IsOpen="False" Severity="Informational" />
 
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="6" HorizontalAlignment="Right">
                         <ComboBox x:Name="FilterBox" SelectionChanged="OnFilterChanged" MinWidth="160" SelectedIndex="0" Height="32">
                             <ComboBoxItem x:Uid="FilterAll" Tag="All" />
                             <ComboBoxItem x:Uid="FilterEnabledOnly" Tag="EnabledOnly" />
@@ -169,6 +169,18 @@
                             <ComboBoxItem x:Uid="FilterWithChanges" Tag="WithChanges" />
                             <ComboBoxItem x:Uid="FilterWithoutChanges" Tag="WithoutChanges" />
                         </ComboBox>
+                        <ComboBox x:Name="SortBox" SelectionChanged="OnSortChanged" MinWidth="132" SelectedIndex="0" Height="32">
+                            <ComboBoxItem x:Uid="SortOriginal" Tag="Original" />
+                            <ComboBoxItem x:Uid="SortName" Tag="Name" />
+                            <ComboBoxItem x:Uid="SortExtension" Tag="Extension" />
+                            <ComboBoxItem x:Uid="SortDirectory" Tag="Directory" />
+                            <ComboBoxItem x:Uid="SortSize" Tag="Size" />
+                            <ComboBoxItem x:Uid="SortModified" Tag="Modified" />
+                            <ComboBoxItem x:Uid="SortCreated" Tag="Created" />
+                        </ComboBox>
+                        <Button x:Name="SortDirectionButton" Width="32" Height="32" Padding="0" Click="OnSortDirectionChanged" ToolTipService.ToolTip="{x:Bind SortDirectionToolTip, Mode=OneWay}" AutomationProperties.Name="{x:Bind SortDirectionToolTip, Mode=OneWay}">
+                            <FontIcon x:Name="SortDirectionIcon" Glyph="&#xE74A;" FontSize="12" />
+                        </Button>
                     </StackPanel>
                     
                     <Grid Grid.Row="2" AllowDrop="True" DragOver="OnFilesDragOver" Drop="OnFilesDrop">
