@@ -141,8 +141,11 @@
   <data name="AppBarClear.Label" xml:space="preserve">
     <value>Clear</value>
   </data>
-  <data name="AppBarUndo.Label" xml:space="preserve">
-    <value>Reset</value>
+  <data name="AppBarResetRules.Label" xml:space="preserve">
+    <value>Reset rules</value>
+  </data>
+  <data name="AppBarResetRules.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reset all rename rules</value>
   </data>
   <data name="ApplyButtonText.Text" xml:space="preserve">
     <value>Apply</value>
@@ -538,5 +541,35 @@ Do you want to restart now?</value>
   </data>
   <data name="SortDescendingToolTip" xml:space="preserve">
     <value>Descending order</value>
+  </data>
+  <data name="FolderImportSingleTitle" xml:space="preserve">
+    <value>Add “{0}”</value>
+  </data>
+  <data name="FolderImportMultipleTitle" xml:space="preserve">
+    <value>Add {0} folders</value>
+  </data>
+  <data name="FolderImportIncludeSubfolders" xml:space="preserve">
+    <value>Include subfolders</value>
+  </data>
+  <data name="FolderImportDepthLabel" xml:space="preserve">
+    <value>Depth</value>
+  </data>
+  <data name="FolderImportDepthAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="FolderImportDepthOne" xml:space="preserve">
+    <value>1 level</value>
+  </data>
+  <data name="FolderImportDepthTwo" xml:space="preserve">
+    <value>2 levels</value>
+  </data>
+  <data name="FolderImportDepthThree" xml:space="preserve">
+    <value>3 levels</value>
+  </data>
+  <data name="FolderImportPrimary" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="FolderImportCancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

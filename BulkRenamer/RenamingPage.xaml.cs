@@ -119,33 +119,14 @@ namespace BulkRenamer
                 return;
             }
 
-            bool includeSubfolders = false;
-
-            var subfolders = await folder.GetFoldersAsync();
-            if (subfolders.Any())
+            var options = await GetFolderImportOptionsAsync(new[] { folder });
+            if (options is null)
             {
-                includeSubfolders = await ConfirmIncludeSubfolders(folder.Name);
-                if (!includeSubfolders)
-                {
-                    subfolders = new List<StorageFolder>();
-                }
+                return;
             }
 
-            var paths = new List<string>();
-
-            var files = await folder.GetFilesAsync();
-            paths.AddRange(files.Select(f => f.Path));
-
-            if (includeSubfolders)
-            {
-                foreach (var sub in subfolders)
-                {
-                    var subFiles = await sub.GetFilesAsync();
-                    paths.AddRange(subFiles.Select(f => f.Path));
-                }
-            }
-
-            AddFilePaths(paths, folder.Path, includeSubfolders);
+            var paths = await CollectFolderFilePathsAsync(folder, options);
+            AddFilePaths(paths, folder.Path, options.IncludeSubfolders);
         }
 
         private void OnFilesDragOver(object sender, DragEventArgs e)
@@ -174,36 +155,26 @@ namespace BulkRenamer
             var folderItems = DeduplicateNestedFolders(items.OfType<StorageFolder>());
 
             var directFiles = fileItems.Select(f => f.Path).ToList();
+            var folderList = folderItems.ToList();
+            var options = await GetFolderImportOptionsAsync(folderList);
+            if (options is null)
+            {
+                e.Handled = true;
+                return;
+            }
+
             if (directFiles.Count > 0)
             {
                 AddFilePaths(directFiles);
             }
 
-            foreach (var folder in folderItems)
+            foreach (var folder in folderList)
             {
-                bool includeSubfolders = false;
-                var subfolders = await folder.GetFoldersAsync();
-                if (subfolders.Any())
-                {
-                    includeSubfolders = await ConfirmIncludeSubfolders(folder.Name);
-                }
-
-                var paths = new List<string>();
-                var rootFiles = await folder.GetFilesAsync();
-                paths.AddRange(rootFiles.Select(f => f.Path));
-
-                if (includeSubfolders)
-                {
-                    foreach (var sub in subfolders)
-                    {
-                        var subFiles = await sub.GetFilesAsync();
-                        paths.AddRange(subFiles.Select(f => f.Path));
-                    }
-                }
+                var paths = await CollectFolderFilePathsAsync(folder, options);
 
                 if (paths.Count > 0)
                 {
-                    AddFilePaths(paths, folder.Path, includeSubfolders);
+                    AddFilePaths(paths, folder.Path, options.IncludeSubfolders);
                 }
             }
 
@@ -321,7 +292,7 @@ namespace BulkRenamer
             UpdatePreview();
         }
 
-        private void OnUndo(object sender, RoutedEventArgs e)
+        private void OnResetRules(object sender, RoutedEventArgs e)
         {
             if (_suppressUpdates) return;
 
@@ -735,19 +706,172 @@ namespace BulkRenamer
             CanApply = anyEnabled && anyChange;
         }
 
-        private async Task<bool> ConfirmIncludeSubfolders(string folderName)
+        private async Task<FolderImportOptions?> GetFolderImportOptionsAsync(IReadOnlyCollection<StorageFolder> folders)
         {
+            if (folders.Count == 0 || !await AnyFolderHasSubfoldersAsync(folders))
+            {
+                return new FolderImportOptions();
+            }
+
+            var includeSubfoldersBox = new CheckBox
+            {
+                Content = GetString("FolderImportIncludeSubfolders"),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(0, 2, 0, 0)
+            };
+
+            var depthBox = new ComboBox
+            {
+                MinWidth = 132,
+                SelectedIndex = 0,
+                IsEnabled = false
+            };
+            depthBox.Items.Add(new ComboBoxItem { Content = GetString("FolderImportDepthAll"), Tag = "All" });
+            depthBox.Items.Add(new ComboBoxItem { Content = GetString("FolderImportDepthOne"), Tag = "1" });
+            depthBox.Items.Add(new ComboBoxItem { Content = GetString("FolderImportDepthTwo"), Tag = "2" });
+            depthBox.Items.Add(new ComboBoxItem { Content = GetString("FolderImportDepthThree"), Tag = "3" });
+
+            var depthRow = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Spacing = 8,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Visibility = Visibility.Collapsed,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            depthRow.Children.Add(new TextBlock
+            {
+                Text = GetString("FolderImportDepthLabel"),
+                VerticalAlignment = VerticalAlignment.Center
+            });
+            depthRow.Children.Add(depthBox);
+
+            includeSubfoldersBox.Checked += (_, _) =>
+            {
+                depthRow.Visibility = Visibility.Visible;
+                depthBox.IsEnabled = true;
+            };
+            includeSubfoldersBox.Unchecked += (_, _) =>
+            {
+                depthRow.Visibility = Visibility.Collapsed;
+                depthBox.IsEnabled = false;
+            };
+
+            var content = new StackPanel
+            {
+                Spacing = 10,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                MaxWidth = 340
+            };
+            content.Children.Add(includeSubfoldersBox);
+            content.Children.Add(depthRow);
+
             var dialog = new ContentDialog
             {
-                Title = GetString("ConfirmSubfoldersTitle"),
-                Content = FormatString("ConfirmSubfoldersContent", folderName),
-                PrimaryButtonText = GetString("ConfirmSubfoldersYes"),
-                CloseButtonText = GetString("ConfirmSubfoldersNo"),
+                Title = folders.Count == 1
+                    ? FormatString("FolderImportSingleTitle", folders.First().Name)
+                    : FormatString("FolderImportMultipleTitle", folders.Count),
+                Content = content,
+                PrimaryButtonText = GetString("FolderImportPrimary"),
+                CloseButtonText = GetString("FolderImportCancel"),
                 DefaultButton = ContentDialogButton.Primary
             };
 
             var result = await ShowDialogAsync(dialog);
-            return result == ContentDialogResult.Primary;
+            if (result != ContentDialogResult.Primary)
+            {
+                return null;
+            }
+
+            return new FolderImportOptions
+            {
+                IncludeSubfolders = includeSubfoldersBox.IsChecked == true,
+                MaxDepth = includeSubfoldersBox.IsChecked == true ? GetSelectedFolderDepth(depthBox) : 0
+            };
+        }
+
+        private static int? GetSelectedFolderDepth(ComboBox depthBox)
+        {
+            if (depthBox.SelectedItem is ComboBoxItem item && item.Tag is string tag && int.TryParse(tag, out var depth))
+            {
+                return depth;
+            }
+
+            return null;
+        }
+
+        private static async Task<bool> AnyFolderHasSubfoldersAsync(IEnumerable<StorageFolder> folders)
+        {
+            foreach (var folder in folders)
+            {
+                try
+                {
+                    var subfolders = await folder.GetFoldersAsync();
+                    if (subfolders.Any())
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    // If a folder cannot be inspected, keep the import moving with root files.
+                }
+            }
+
+            return false;
+        }
+
+        private static async Task<List<string>> CollectFolderFilePathsAsync(StorageFolder folder, FolderImportOptions options)
+        {
+            var paths = new List<string>();
+            var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            await CollectFolderFilePathsAsync(folder, paths, options.IncludeSubfolders ? options.MaxDepth : 0, visited);
+            return paths;
+        }
+
+        private static async Task CollectFolderFilePathsAsync(StorageFolder folder, List<string> paths, int? remainingDepth, HashSet<string> visited)
+        {
+            if (!string.IsNullOrEmpty(folder.Path) && !visited.Add(folder.Path))
+            {
+                return;
+            }
+
+            try
+            {
+                var files = await folder.GetFilesAsync();
+                paths.AddRange(files.Select(f => f.Path));
+            }
+            catch
+            {
+                // Skip folders Windows refuses without interrupting the whole batch.
+            }
+
+            if (remainingDepth == 0)
+            {
+                return;
+            }
+
+            IReadOnlyList<StorageFolder> subfolders;
+            try
+            {
+                subfolders = await folder.GetFoldersAsync();
+            }
+            catch
+            {
+                return;
+            }
+
+            int? nextDepth = remainingDepth.HasValue ? remainingDepth.Value - 1 : null;
+            foreach (var subfolder in subfolders)
+            {
+                await CollectFolderFilePathsAsync(subfolder, paths, nextDepth, visited);
+            }
+        }
+
+        private sealed class FolderImportOptions
+        {
+            public bool IncludeSubfolders { get; init; }
+            public int? MaxDepth { get; init; }
         }
 
         private async Task<ContentDialogResult> ShowDialogAsync(ContentDialog dialog)

@@ -25,7 +25,7 @@
             <AppBarButton x:Uid="AppBarSaveConfig" Icon="Save" Click="OnSaveConfig" />
             <AppBarButton x:Uid="AppBarLoadConfig" Icon="OpenFile" Click="OnLoadConfig" />
             <AppBarSeparator />
-            <AppBarButton x:Uid="AppBarUndo" Icon="Undo" Click="OnUndo" />
+            <AppBarButton x:Uid="AppBarResetRules" Icon="Refresh" Click="OnResetRules" />
             <AppBarElementContainer VerticalAlignment="Center">
                 <Button Style="{StaticResource AccentButtonStyle}" Click="OnApply" Padding="10,6" VerticalAlignment="Center" IsEnabled="{x:Bind CanApply, Mode=OneWay}">
                     <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
