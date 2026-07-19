@@ -15,6 +15,8 @@
         </Grid.RowDefinitions>
         <Grid.Resources>
             <local:BoolToOpacityConverter x:Key="BoolToOpacityConverter" EnabledOpacity="1" DisabledOpacity="0.4" />
+            <local:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </Grid.Resources>
 
         <CommandBar Grid.Row="0" DefaultLabelPosition="Right" BorderBrush="{ThemeResource ControlStrokeColorSecondaryBrush}" BorderThickness="1" Margin="0,16,0,12">
@@ -46,9 +48,99 @@
                 <StackPanel Spacing="10">
                     <Border Padding="12" CornerRadius="12" Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}" BorderBrush="{ThemeResource ControlStrokeColorSecondaryBrush}" BorderThickness="1">
                         <StackPanel Spacing="10">
+                            <Expander x:Name="TemplateExpander" IsExpanded="False" HorizontalAlignment="Stretch">
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+                                        <TextBlock x:Uid="TemplateExpanderTitle" VerticalAlignment="Center" />
+                                        <TextBlock x:Uid="TemplateEnabledBadge" FontSize="12" VerticalAlignment="Center"
+                                                   Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                                   Visibility="{Binding IsChecked, ElementName=TemplateToggle, Converter={StaticResource BoolToVisibilityConverter}}" Margin="0, 2, 0, 0" />
+                                        <TextBlock x:Uid="TemplateDisabledBadge" FontSize="12" VerticalAlignment="Center" Margin="0, 2, 0, 0"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   Visibility="{Binding IsChecked, ElementName=TemplateToggle, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Invert}" />
+                                    </StackPanel>
+                                </Expander.Header>
+                                <StackPanel Spacing="8" Margin="4,6,4,4">
+                                    <CheckBox x:Name="TemplateToggle" x:Uid="TemplateToggle" Checked="OnTemplateToggleChanged" Unchecked="OnTemplateToggleChanged" />
+                                    <TextBox x:Name="TemplateBox" x:Uid="TemplateBox" TextChanged="OnRuleChanged"
+                                             IsEnabled="{Binding IsChecked, ElementName=TemplateToggle}"
+                                             MinHeight="64" TextWrapping="Wrap" AcceptsReturn="False" />
+                                    <Button x:Name="InsertVariableButton" x:Uid="InsertVariableButton"
+                                            IsEnabled="{Binding IsChecked, ElementName=TemplateToggle}" HorizontalAlignment="Left">
+                                        <Button.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutSubItem x:Uid="VariableNameGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableName" Tag="{}{name}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableExtension" Tag="{}{ext}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableFilename" Tag="{}{filename}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                                <MenuFlyoutSubItem x:Uid="VariableNumberGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableIndex" Tag="{}{index}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableIndexPadded" Tag="{}{index:000}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                                <MenuFlyoutSubItem x:Uid="VariableLocationGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableFolder" Tag="{}{folder}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableParentFolder" Tag="{}{parent-folder}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                                <MenuFlyoutSubItem x:Uid="VariableFileGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableSize" Tag="{}{size}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                                <MenuFlyoutSubItem x:Uid="VariablePhotoGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableDateTaken" Tag="{}{date-taken:yyyy-MM-dd}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableWidth" Tag="{}{width}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableHeight" Tag="{}{height}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableOrientation" Tag="{}{orientation}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableCameraModel" Tag="{}{camera-model}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableLens" Tag="{}{lens}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableIso" Tag="{}{iso}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableAperture" Tag="{}{aperture}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableExposure" Tag="{}{exposure}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableGpsCity" Tag="{}{latitude}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableGpsCountry" Tag="{}{longitude}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                                <MenuFlyoutSubItem x:Uid="VariableAudioGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableTrack" Tag="{}{track:00}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableDisc" Tag="{}{disc}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableDiscTotal" Tag="{}{disc-total}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableTitle" Tag="{}{audio-title}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableArtist" Tag="{}{artist}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableAlbum" Tag="{}{album}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableAlbumArtist" Tag="{}{album-artist}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableYear" Tag="{}{year}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableGenre" Tag="{}{genre}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableDuration" Tag="{}{duration}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                                <MenuFlyoutSubItem x:Uid="VariableVideoGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableVideoDuration" Tag="{}{duration}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableResolution" Tag="{}{resolution}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableQuality" Tag="{}{quality}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableFps" Tag="{}{fps}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableCodec" Tag="{}{codec}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableBitrate" Tag="{}{bitrate}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableMediaCreated" Tag="{}{media-created:yyyy-MM-dd}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                                <MenuFlyoutSubItem x:Uid="VariableDocumentGroup">
+                                                    <MenuFlyoutItem x:Uid="VariableDocumentTitle" Tag="{}{document-title}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableAuthor" Tag="{}{author}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableSubject" Tag="{}{subject}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableKeywords" Tag="{}{keywords}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariablePages" Tag="{}{pages}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableCompany" Tag="{}{company}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableDocumentCreated" Tag="{}{document-created:yyyy-MM-dd}" Click="OnInsertVariable" />
+                                                    <MenuFlyoutItem x:Uid="VariableDocumentModified" Tag="{}{document-saved:yyyy-MM-dd}" Click="OnInsertVariable" />
+                                                </MenuFlyoutSubItem>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                    <TextBlock x:Uid="TemplateOrderHint" Style="{StaticResource CaptionTextBlockStyle}"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Expander>
+
                             <StackPanel Spacing="6">
                                 <TextBlock x:Uid="ScopeLabel" />
-                                <ComboBox x:Name="ScopeBox" SelectionChanged="OnRuleChanged" SelectedIndex="0" HorizontalAlignment="Stretch">
+                                <ComboBox x:Name="ScopeBox" SelectionChanged="OnRuleChanged" SelectedIndex="0" HorizontalAlignment="Stretch"
+                                          IsEnabled="{Binding IsChecked, ElementName=TemplateToggle, Converter={StaticResource InverseBoolConverter}}">
                                     <ComboBoxItem x:Uid="ScopeNameItem" Tag="Name" />
                                     <ComboBoxItem x:Uid="ScopeExtensionItem" Tag="Extension" />
                                     <ComboBoxItem x:Uid="ScopeFullItem" Tag="Full" />
@@ -224,8 +316,13 @@
                                                 <ColumnDefinition Width="{x:Bind DirectoryColumnWidth, Mode=OneWay}" />
                                             </Grid.ColumnDefinitions>
                                             <CheckBox Grid.Column="0" IsChecked="{x:Bind IsEnabled, Mode=TwoWay}" Checked="OnFileEnabledToggled" Unchecked="OnFileEnabledToggled" VerticalAlignment="Center" />
-                                            <TextBlock Grid.Column="1" Text="{x:Bind OriginalName, Mode=OneWay}" VerticalAlignment="Center" />
-                                            <TextBlock Grid.Column="2" Text="{x:Bind PreviewName, Mode=OneWay}" Foreground="{x:Bind PreviewForeground, Mode=OneWay}" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{x:Bind OriginalName, Mode=OneWay}"
+                                                       TextWrapping="Wrap" VerticalAlignment="Center"
+                                                       ToolTipService.ToolTip="{x:Bind OriginalName, Mode=OneWay}" />
+                                            <TextBlock Grid.Column="2" Text="{x:Bind PreviewName, Mode=OneWay}"
+                                                       Foreground="{x:Bind PreviewForeground, Mode=OneWay}"
+                                                       TextWrapping="Wrap" VerticalAlignment="Center"
+                                                       ToolTipService.ToolTip="{x:Bind PreviewName, Mode=OneWay}" />
                                             <TextBlock Grid.Column="3" Text="{x:Bind DisplayDirectory}" Opacity="0.7" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind DirectoryColumnVisibility, Mode=OneWay}" />
                                         </Grid>
                                     </Border>

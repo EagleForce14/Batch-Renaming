@@ -36,6 +36,7 @@ namespace BulkRenamer
         private bool _isReordering;
         private bool _hasPendingRuleChanges;
         private readonly SemaphoreSlim _dialogGate = new(1, 1);
+        private readonly SemaphoreSlim _metadataGate = new(4, 4);
         private readonly ResourceLoader? _resources;
         private Microsoft.UI.Dispatching.DispatcherQueue _dispatcherQueue;
 
@@ -286,6 +287,30 @@ namespace BulkRenamer
             UpdatePreview();
         }
 
+        private void OnTemplateToggleChanged(object sender, RoutedEventArgs e)
+        {
+            if (!_isInitialized || _suppressUpdates) return;
+
+            if (TemplateToggle.IsChecked == true && string.IsNullOrWhiteSpace(TemplateBox.Text))
+            {
+                TemplateBox.Text = "{name}";
+                TemplateBox.SelectionStart = TemplateBox.Text.Length;
+            }
+
+            _hasPendingRuleChanges = true;
+            UpdatePreview();
+        }
+
+        private void OnInsertVariable(object sender, RoutedEventArgs e)
+        {
+            if (sender is not MenuFlyoutItem { Tag: string variable }) return;
+
+            var start = Math.Clamp(TemplateBox.SelectionStart, 0, TemplateBox.Text.Length);
+            TemplateBox.Text = TemplateBox.Text.Insert(start, variable);
+            TemplateBox.SelectionStart = start + variable.Length;
+            TemplateBox.Focus(FocusState.Programmatic);
+        }
+
         private void OnFileEnabledToggled(object sender, RoutedEventArgs e)
         {
             if (!_isInitialized || _suppressUpdates) return;
@@ -298,6 +323,8 @@ namespace BulkRenamer
 
             _suppressUpdates = true;
 
+            TemplateToggle.IsChecked = false;
+            TemplateBox.Text = string.Empty;
             PrefixBox.Text = string.Empty;
             SuffixBox.Text = string.Empty;
             SearchBox.Text = string.Empty;
@@ -426,6 +453,8 @@ namespace BulkRenamer
         {
             _suppressUpdates = true;
 
+            TemplateToggle.IsChecked = settings.UseTemplate;
+            TemplateBox.Text = settings.NameTemplate;
             PrefixBox.Text = settings.Prefix;
             SuffixBox.Text = settings.Suffix;
             SearchBox.Text = settings.Search;
@@ -604,6 +633,7 @@ namespace BulkRenamer
 
                 var entry = new FileEntry(path, rootFolder, includeSubfolders, _nextImportIndex++);
                 Files.Add(entry);
+                _ = LoadMetadataAsync(entry);
                 added++;
             }
 
@@ -625,6 +655,19 @@ namespace BulkRenamer
             return added;
         }
 
+        private async Task LoadMetadataAsync(FileEntry entry)
+        {
+            await _metadataGate.WaitAsync();
+            try
+            {
+                await entry.LoadMetadataAsync();
+            }
+            finally
+            {
+                _metadataGate.Release();
+            }
+        }
+
         private RenameSettings ReadSettings()
         {
             var numberingActive = NumberingToggle?.IsChecked == true;
@@ -633,6 +676,8 @@ namespace BulkRenamer
 
             return new RenameSettings
             {
+                UseTemplate = TemplateToggle?.IsChecked == true,
+                NameTemplate = TemplateBox?.Text ?? string.Empty,
                 Prefix = PrefixBox.Text ?? string.Empty,
                 Suffix = SuffixBox.Text ?? string.Empty,
                 Search = SearchBox.Text ?? string.Empty,
@@ -941,6 +986,10 @@ namespace BulkRenamer
                 {
                     UpdateFilteredFiles();
                 }
+            }
+            else if (e.PropertyName == nameof(FileEntry.MetadataLoaded))
+            {
+                UpdatePreview();
             }
         }
 

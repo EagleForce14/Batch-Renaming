@@ -572,4 +572,66 @@ Do you want to restart now?</value>
   <data name="FolderImportCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="TemplateExpanderTitle.Text" xml:space="preserve"><value>Rename with variables</value></data>
+  <data name="TemplateEnabledBadge.Text" xml:space="preserve"><value>Enabled</value></data>
+  <data name="TemplateDisabledBadge.Text" xml:space="preserve"><value>Disabled</value></data>
+  <data name="TemplateToggle.Content" xml:space="preserve"><value>Enable renaming with variables</value></data>
+  <data name="TemplateBox.PlaceholderText" xml:space="preserve"><value>Example: {created:yyyy-MM-dd}_{name}_{index:000}</value></data>
+  <data name="TemplateBox.AutomationProperties.Name" xml:space="preserve"><value>Name template</value></data>
+  <data name="InsertVariableButton.Content" xml:space="preserve"><value>+ Add a variable</value></data>
+  <data name="TemplateOrderHint.Text" xml:space="preserve"><value>Variables build the new name. The standard rules below are applied next. When this mode is enabled, the extension cannot be changed.</value></data>
+  <data name="VariableNameGroup.Text" xml:space="preserve"><value>File name</value></data>
+  <data name="VariableName.Text" xml:space="preserve"><value>File name without extension  &#8594;  {name}</value></data>
+  <data name="VariableExtension.Text" xml:space="preserve"><value>Extension  &#8594;  {ext}</value></data>
+  <data name="VariableFilename.Text" xml:space="preserve"><value>Name with extension  &#8594;  {filename}</value></data>
+  <data name="VariableNumberGroup.Text" xml:space="preserve"><value>Number in the list</value></data>
+  <data name="VariableIndex.Text" xml:space="preserve"><value>1, 2, 3...  &#8594;  {index}</value></data>
+  <data name="VariableIndexPadded.Text" xml:space="preserve"><value>001, 002, 003...  &#8594;  {index:000}</value></data>
+  <data name="VariableLocationGroup.Text" xml:space="preserve"><value>Location</value></data>
+  <data name="VariableFolder.Text" xml:space="preserve"><value>Current folder  &#8594;  {folder}</value></data>
+  <data name="VariableParentFolder.Text" xml:space="preserve"><value>Parent folder  &#8594;  {parent-folder}</value></data>
+  <data name="VariableFileGroup.Text" xml:space="preserve"><value>File information</value></data>
+  <data name="VariableSize.Text" xml:space="preserve"><value>Size in bytes  &#8594;  {size}</value></data>
+  <data name="History_Template" xml:space="preserve"><value>Template: {0} &#8226; </value></data>
+  <data name="VariablePhotoGroup.Text" xml:space="preserve"><value>Images and photos</value></data>
+  <data name="VariableDateTaken.Text" xml:space="preserve"><value>Date taken  &#8594;  {date-taken}</value></data>
+  <data name="VariableWidth.Text" xml:space="preserve"><value>Width  &#8594;  {width}</value></data>
+  <data name="VariableHeight.Text" xml:space="preserve"><value>Height  &#8594;  {height}</value></data>
+  <data name="VariableOrientation.Text" xml:space="preserve"><value>Orientation  &#8594;  {orientation}</value></data>
+  <data name="VariableCameraModel.Text" xml:space="preserve"><value>Camera model  &#8594;  {camera-model}</value></data>
+  <data name="VariableLens.Text" xml:space="preserve"><value>Lens  &#8594;  {lens}</value></data>
+  <data name="VariableIso.Text" xml:space="preserve"><value>ISO sensitivity  &#8594;  {iso}</value></data>
+  <data name="VariableAperture.Text" xml:space="preserve"><value>Aperture  &#8594;  {aperture}</value></data>
+  <data name="VariableExposure.Text" xml:space="preserve"><value>Exposure time  &#8594;  {exposure}</value></data>
+  <data name="VariableGpsCity.Text" xml:space="preserve"><value>GPS latitude  &#8594;  {latitude}</value></data>
+  <data name="VariableGpsCountry.Text" xml:space="preserve"><value>GPS longitude  &#8594;  {longitude}</value></data>
+  <data name="VariableAudioGroup.Text" xml:space="preserve"><value>Audio</value></data>
+  <data name="VariableTrack.Text" xml:space="preserve"><value>Track number  &#8594;  {track:00}</value></data>
+  <data name="VariableTrackTotal.Text" xml:space="preserve"><value>Total tracks  &#8594;  {track-total}</value></data>
+  <data name="VariableDisc.Text" xml:space="preserve"><value>Disc number  &#8594;  {disc}</value></data>
+  <data name="VariableDiscTotal.Text" xml:space="preserve"><value>Total discs  &#8594;  {disc-total}</value></data>
+  <data name="VariableTitle.Text" xml:space="preserve"><value>Saved audio title  &#8594;  {audio-title}</value></data>
+  <data name="VariableArtist.Text" xml:space="preserve"><value>Artist  &#8594;  {artist}</value></data>
+  <data name="VariableAlbum.Text" xml:space="preserve"><value>Album  &#8594;  {album}</value></data>
+  <data name="VariableAlbumArtist.Text" xml:space="preserve"><value>Album artist  &#8594;  {album-artist}</value></data>
+  <data name="VariableYear.Text" xml:space="preserve"><value>Year  &#8594;  {year}</value></data>
+  <data name="VariableGenre.Text" xml:space="preserve"><value>Genre  &#8594;  {genre}</value></data>
+  <data name="VariableDuration.Text" xml:space="preserve"><value>Duration  &#8594;  {duration}</value></data>
+  <data name="VariableVideoGroup.Text" xml:space="preserve"><value>Video</value></data>
+  <data name="VariableVideoDuration.Text" xml:space="preserve"><value>Duration  &#8594;  {duration}</value></data>
+  <data name="VariableResolution.Text" xml:space="preserve"><value>Resolution  &#8594;  {resolution}</value></data>
+  <data name="VariableQuality.Text" xml:space="preserve"><value>Quality (1080p, 4K...)  &#8594;  {quality}</value></data>
+  <data name="VariableFps.Text" xml:space="preserve"><value>Frames per second  &#8594;  {fps}</value></data>
+  <data name="VariableCodec.Text" xml:space="preserve"><value>Codec  &#8594;  {codec}</value></data>
+  <data name="VariableBitrate.Text" xml:space="preserve"><value>Bitrate in kbit/s  &#8594;  {bitrate}</value></data>
+  <data name="VariableMediaCreated.Text" xml:space="preserve"><value>Media date  &#8594;  {media-created}</value></data>
+  <data name="VariableDocumentGroup.Text" xml:space="preserve"><value>Document properties</value></data>
+  <data name="VariableDocumentTitle.Text" xml:space="preserve"><value>Title saved in the document  &#8594;  {document-title}</value></data>
+  <data name="VariableAuthor.Text" xml:space="preserve"><value>Author  &#8594;  {author}</value></data>
+  <data name="VariableSubject.Text" xml:space="preserve"><value>Subject  &#8594;  {subject}</value></data>
+  <data name="VariableKeywords.Text" xml:space="preserve"><value>Keywords  &#8594;  {keywords}</value></data>
+  <data name="VariablePages.Text" xml:space="preserve"><value>Page count  &#8594;  {pages}</value></data>
+  <data name="VariableCompany.Text" xml:space="preserve"><value>Company  &#8594;  {company}</value></data>
+  <data name="VariableDocumentCreated.Text" xml:space="preserve"><value>File creation date  &#8594;  {document-created}</value></data>
+  <data name="VariableDocumentModified.Text" xml:space="preserve"><value>File modified date  &#8594;  {document-saved}</value></data>
 </root>
